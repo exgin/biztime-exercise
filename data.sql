@@ -1,12 +1,27 @@
 \c biztime
 
-DROP TABLE IF EXISTS invoices;
-DROP TABLE IF EXISTS companies;
+DROP TABLE IF EXISTS invoices cascade;
+DROP TABLE IF EXISTS companies cascade;
+DROP TABLE IF EXISTS industries cascade;
 
 CREATE TABLE companies (
     code text PRIMARY KEY,
     name text NOT NULL UNIQUE,
     description text
+);
+
+CREATE TABLE industries (
+  industry text NOT NULL UNIQUE,
+  code text PRIMARY KEY
+);
+
+-- making an intersection table 
+CREATE TABLE industry_company (
+  comp_code text,
+  ind_code text,
+  CONSTRAINT ind_comp_id PRIMARY KEY (ind_code, comp_code),
+  CONSTRAINT FK_comp_code FOREIGN KEY (comp_code) REFERENCES companies (code) ON DELETE CASCADE,
+  CONSTRAINT FK_ind_code FOREIGN KEY (ind_code) REFERENCES industries (code) ON DELETE CASCADE
 );
 
 CREATE TABLE invoices (
@@ -18,6 +33,14 @@ CREATE TABLE invoices (
     paid_date date,
     CONSTRAINT invoices_amt_check CHECK ((amt > (0)::double precision))
 );
+
+INSERT INTO industry_company 
+  VALUES ('tech', 'apple'),
+         ('bis', 'ibm');
+
+INSERT INTO industries 
+  VALUES ('Technology', 'tech'),
+         ('Business', 'bis');
 
 INSERT INTO companies
   VALUES ('apple', 'Apple Computer', 'Maker of OSX.'),
