@@ -1,4 +1,5 @@
 const express = require('express');
+const slugify = require('slugify');
 const ExpressError = require('../expressError');
 const router = express.Router();
 const db = require('../db');
@@ -37,7 +38,7 @@ router.post('/', async (req, res, next) => {
 
 router.patch('/:code', async (req, res, next) => {
   try {
-    const { code } = req.params;
+    let code = slugify(name, { lower: true });
     const { name, description } = req.body;
     const results = await db.query(`UPDATE companies SET name = $1, description = $2 WHERE code = $3 RETURNING code, name, description`, [name, description, code]);
 
