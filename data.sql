@@ -51,3 +51,12 @@ INSERT INTO invoices (comp_Code, amt, paid, paid_date)
          ('apple', 200, false, null),
          ('apple', 300, true, '2018-01-01'),
          ('ibm', 400, false, null);
+
+
+SELECT i.code, i.industry, c.code
+FROM industries AS i 
+LEFT JOIN industry_company AS ic
+ON i.code = ic.ind_code
+LEFT JOIN companies AS c
+ON c.code = ic.comp_code
+WHERE i.code = 'tech';
