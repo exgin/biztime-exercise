@@ -20,7 +20,7 @@
   "homepage": "https://github.com/exgin/biztime-exercise#readme",
   "dependencies": {
     "axios": "^0.19.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jest": "^26.0.1",
     "pg": "^8.2.1",
     "slugify": "^1.4.0"
